@@ -42,6 +42,24 @@ Health Score (explained physiology) · Prediction · Motivation · AI Insight.
 All engines are pure, deterministic, and UI-free — see
 [docs/05-architecture.md](docs/05-architecture.md).
 
+## Building
+
+The Xcode project is generated from the declarative spec (`project.yml`)
+to avoid `.pbxproj` merge conflicts:
+
+```bash
+brew install xcodegen
+xcodegen generate
+open Aura.xcodeproj
+```
+
+Requires Xcode 15+ / iOS 17 SDK. Engine unit tests live in the `AuraTests`
+target (`Aura/Tests/DomainTests`) and run with `⌘U` or:
+
+```bash
+xcodebuild test -scheme Aura -destination 'platform=iOS Simulator,name=iPhone 15 Pro'
+```
+
 ## Product principles
 
 Never shame. Never guilt. Celebrate progress. Trends over days.
