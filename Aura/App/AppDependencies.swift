@@ -42,6 +42,13 @@ public final class AppDependencies {
     }
 }
 
+private struct DependenciesKey: EnvironmentKey {
+    static let defaultValue: AppDependencies? = nil
+}
+
 public extension EnvironmentValues {
-    @Entry var dependencies: AppDependencies? = nil
+    var dependencies: AppDependencies? {
+        get { self[DependenciesKey.self] }
+        set { self[DependenciesKey.self] = newValue }
+    }
 }
