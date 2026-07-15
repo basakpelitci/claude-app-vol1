@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Aura — HTML Prototype</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+// Tailwind config mirrors Aura/DesignSystem/Tokens/AuraTheme.swift.
+// Colors resolve through CSS variables so light/dark match the SwiftUI
+// adaptive tokens (dark is its own tuned palette, not an inversion).
+tailwind.config = {
+  darkMode: 'media',
+  theme: {
+    extend: {
+      colors: {
+        bg:        'var(--bg)',
+        surface:   'var(--surface)',
+        tprimary:  'var(--text-primary)',
+        tsecondary:'var(--text-secondary)',
+        accent:    'var(--accent)',
+        health:    'var(--health)',
+        protein:   'var(--protein)',
+        water:     'var(--water)',
+        energy:    'var(--energy)',
+        cycle:     'var(--cycle)',
+        celebrate: 'var(--celebrate)',
+      },
+      borderRadius: {
+        card: '24px',   // AuraRadius.card
+        chip: '12px',   // AuraRadius.chip
+        sheet: '32px',  // AuraRadius.sheet
+      },
+      fontFamily: {
+        sf: ['-apple-system','BlinkMacSystemFont','SF Pro Text','Segoe UI','Roboto','sans-serif'],
+        rounded: ['ui-rounded','-apple-system','BlinkMacSystemFont','SF Pro Rounded','Segoe UI','sans-serif'],
+      },
+    },
+  },
+};
+</script>
+<style type="text/css">
+  /* AuraColor tokens — light */
+  :root {
+    --bg: #F7F6F3;
+    --surface: #FFFFFF;
+    --text-primary: #1A1A1E;
+    --text-secondary: #6E6E76;
+    --accent: #5E8B7E;
+    --health: #4A7FA5;
+    --protein: #8A6FB8;
+    --water: #4E9FBF;
+    --energy: #C99A5B;
+    --cycle: #B87A8F;
+    --celebrate: #D9A441;
+    --glass: rgba(255,255,255,0.72);
+    --glass-shadow: rgba(0,0,0,0.06);
+  }
+  /* AuraColor tokens — dark (separately tuned, matches AuraTheme.swift) */
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #0D0D10;
+      --surface: #17171C;
+      --text-primary: #F4F4F6;
+      --text-secondary: #9B9BA4;
+      --accent: #7FB0A1;
+      --health: #6FA5CC;
+      --protein: #A98FD6;
+      --water: #6FC0DE;
+      --energy: #DDB27A;
+      --cycle: #D699AE;
+      --celebrate: #E8BC63;
+      --glass: rgba(28,28,34,0.68);
+      --glass-shadow: rgba(0,0,0,0.4);
+    }
+  }
+  html, body { height: 100%; }
+  body { background: #b9b6ae; }
+  @media (prefers-color-scheme: dark) { body { background: #000; } }
+
+  /* GlassCard — .ultraThinMaterial + inner border + soft shadow */
+  .glass {
+    background: var(--glass);
+    -webkit-backdrop-filter: blur(20px);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255,255,255,0.08);
+    box-shadow: 0 8px 24px var(--glass-shadow);
+  }
+  /* ScoreRing animation (AuraMotion.score ≈ 0.9s spring) */
+  .ring-progress {
+    transition: stroke-dashoffset 0.9s cubic-bezier(0.34, 1.3, 0.5, 1);
+  }
+  /* MetricProgressBar fill (AuraMotion.gentle) */
+  .bar-fill { transition: width 0.5s cubic-bezier(0.3, 1.1, 0.5, 1); }
+  /* View push/sheet transitions */
+  .screen { animation: fadeUp 0.28s cubic-bezier(0.3, 1.05, 0.5, 1); }
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+  .sheet-panel { animation: sheetUp 0.32s cubic-bezier(0.3, 1.05, 0.5, 1); }
+  @keyframes sheetUp { from { transform: translateY(100%); } to { transform: none; } }
+  .celebrate-pop { animation: pop 0.55s cubic-bezier(0.3, 1.4, 0.4, 1); }
+  @keyframes pop { from { opacity: 0; transform: scale(0.9); } to { opacity: 1; transform: none; } }
+  @media (prefers-reduced-motion: reduce) {
+    .ring-progress, .bar-fill { transition: none; }
+    .screen, .sheet-panel, .celebrate-pop { animation: none; }
+  }
+  .tabular { font-variant-numeric: tabular-nums; }
+  /* Hide scrollbars inside the phone frame like iOS */
+  .noscroll::-webkit-scrollbar { display: none; }
+  .noscroll { scrollbar-width: none; }
+  input[type="date"] { color-scheme: light dark; }
+</style>
+</head>
+<body class="font-sf antialiased">
+  <!-- Phone frame: 390pt iPhone canvas centered on desktop -->
+  <div class="min-h-screen flex items-center justify-center sm:py-6">
+    <div id="phone"
+         class="relative bg-bg text-tprimary w-full h-[100dvh] sm:w-[390px] sm:h-[844px] sm:rounded-[48px] sm:shadow-2xl overflow-hidden flex flex-col">
+      <!-- Screen content -->
+      <main id="app" class="flex-1 overflow-y-auto noscroll"></main>
+      <!-- Tab bar (RootTabView) -->
+      <nav id="tabbar" class="hidden shrink-0 glass border-t border-black/5 dark:border-white/5">
+        <div class="flex justify-around px-2 pt-2 pb-4">
+          <button data-tab="today" class="tab-btn flex flex-col items-center gap-0.5 w-16 text-[10px] font-medium"><span class="text-xl leading-none">☀️</span>Today</button>
+          <button data-tab="nutrition" class="tab-btn flex flex-col items-center gap-0.5 w-16 text-[10px] font-medium"><span class="text-xl leading-none">🍽️</span>Nutrition</button>
+          <button data-tab="body" class="tab-btn flex flex-col items-center gap-0.5 w-16 text-[10px] font-medium"><span class="text-xl leading-none">📈</span>Body</button>
+          <button data-tab="wardrobe" class="tab-btn flex flex-col items-center gap-0.5 w-16 text-[10px] font-medium"><span class="text-xl leading-none">👗</span>Wardrobe</button>
+          <button data-tab="me" class="tab-btn flex flex-col items-center gap-0.5 w-16 text-[10px] font-medium"><span class="text-xl leading-none">🧘</span>Me</button>
+        </div>
+      </nav>
+      <!-- Sheet + celebration overlays -->
+      <div id="overlay-root"></div>
+    </div>
+  </div>
+  <script src="js/engines.js"></script>
+  <script src="js/store.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
