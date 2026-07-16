@@ -42,6 +42,16 @@ Health Score (explained physiology) · Prediction · Motivation · AI Insight.
 All engines are pure, deterministic, and UI-free — see
 [docs/05-architecture.md](docs/05-architecture.md).
 
+## HTML prototype
+
+Every completed SwiftUI screen has an equivalent interactive HTML prototype
+(Tailwind CSS + vanilla JS) under [`prototype/`](prototype/README.md) for
+browser-based UX testing before compiling the native app. Serve it with
+`cd prototype && python3 -m http.server 8080` — no build step required.
+The domain engines are ported 1:1 to `prototype/js/engines.js`, so scores
+behave exactly like the native app; design tokens, dark mode, and motion
+mirror `AuraTheme.swift`. See [CLAUDE.md](CLAUDE.md) for the parity rule.
+
 ## Building
 
 The Xcode project is generated from the declarative spec (`project.yml`)

@@ -1,0 +1,11 @@
+{
+  "name": "aura-prototype",
+  "version": "1.0.0",
+  "description": "Interactive HTML prototype for the Aura Health OS SwiftUI app",
+  "scripts": {
+    "build": "tailwindcss -i ./src/input.css -o ./css/tailwind.css --minify"
+  },
+  "devDependencies": {
+    "tailwindcss": "^3.4.17"
+  }
+}

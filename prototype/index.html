@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Aura — HTML Prototype</title>
+<!-- Compiled Tailwind (see tailwind.config.js + src/input.css; rebuild with
+     `npm run build`). Pre-built and committed so the prototype runs with no
+     build step and fully offline. -->
+<link rel="stylesheet" href="css/tailwind.css">
+<link rel="icon" href="data:,">
+</head>
+<body class="font-sf antialiased">
+  <!-- Phone frame: 390pt iPhone canvas centered on desktop -->
+  <div class="min-h-screen flex items-center justify-center sm:py-6">
+    <div id="phone"
+         class="relative bg-bg text-tprimary w-full h-[100dvh] sm:w-[390px] sm:h-[844px] sm:rounded-[48px] sm:shadow-2xl overflow-hidden flex flex-col">
+      <!-- Screen content -->
+      <main id="app" class="flex-1 overflow-y-auto noscroll"></main>
+      <!-- Tab bar (RootTabView) -->
+      <nav id="tabbar" class="hidden shrink-0 glass border-t border-black/5 dark:border-white/5">
+        <div class="flex justify-around px-2 pt-2 pb-4">
+          <button data-tab="today" class="tab-btn flex flex-col items-center gap-0.5 w-16 text-[10px] font-medium"><span class="text-xl leading-none">☀️</span>Today</button>
+          <button data-tab="nutrition" class="tab-btn flex flex-col items-center gap-0.5 w-16 text-[10px] font-medium"><span class="text-xl leading-none">🍽️</span>Nutrition</button>
+          <button data-tab="body" class="tab-btn flex flex-col items-center gap-0.5 w-16 text-[10px] font-medium"><span class="text-xl leading-none">📈</span>Body</button>
+          <button data-tab="wardrobe" class="tab-btn flex flex-col items-center gap-0.5 w-16 text-[10px] font-medium"><span class="text-xl leading-none">👗</span>Wardrobe</button>
+          <button data-tab="me" class="tab-btn flex flex-col items-center gap-0.5 w-16 text-[10px] font-medium"><span class="text-xl leading-none">🧘</span>Me</button>
+        </div>
+      </nav>
+      <!-- Sheet + celebration overlays -->
+      <div id="overlay-root"></div>
+    </div>
+  </div>
+  <script src="js/engines.js"></script>
+  <script src="js/store.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
