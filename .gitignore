@@ -1,0 +1,16 @@
+# Xcode
+*.xcodeproj/
+!*.xcodeproj/project.pbxproj.keep
+xcuserdata/
+DerivedData/
+*.xcresult
+
+# SwiftPM
+.build/
+.swiftpm/
+Package.resolved
+
+# macOS
+.DS_Store
+
+node_modules/
